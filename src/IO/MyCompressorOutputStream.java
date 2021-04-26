@@ -16,6 +16,7 @@ public class MyCompressorOutputStream extends OutputStream { //this class exsten
 
     @Override
     public void write(int b) throws IOException {
+        out.write(b);
 
     }
 
@@ -85,4 +86,4 @@ public class MyCompressorOutputStream extends OutputStream { //this class exsten
 }
 
 
-}
+
