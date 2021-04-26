@@ -36,7 +36,7 @@ public class Maze { //all the parameters thay may be in the constructor. variabl
     }
 
     //_-_-_-_-_-_-_-_-_-constructor of new bytes maze -_-_-_-_-_-_-_-_-_
-    public Maze(byte[] bytesMaze)
+    public Maze(byte[] bytesMaze) //get bytes array ans turn it to Maze int matrix
     {
         byte[] currentByte = new byte [4]; //hold 4 bytes everytime from the byte maze array and then we convert back to int
         int[] totalDetails = new  int[6]; //hold the aii details that we need to create int maze (like start/goal position' size of maze..)
@@ -61,7 +61,8 @@ public class Maze { //all the parameters thay may be in the constructor. variabl
         setStartPosition(temp);
         Position temp2 =new Position(totalDetails[4],totalDetails[5]);
         setGoalPosition(temp2);
-        //_________________________
+
+        // open new matrix of int...this is the new maze that we create from byte array after take the details fron 24 first index
         intMaze = new int[numOfRow][numOfCol];
         int index = 24;
         for(int i=0 ; i<numOfRow ; i++)
