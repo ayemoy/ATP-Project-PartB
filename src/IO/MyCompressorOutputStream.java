@@ -21,7 +21,12 @@ public class MyCompressorOutputStream extends OutputStream { //this class exsten
     }
 
     @Override
-    public void write(byte[] bytesArray) throws IOException {
+    public void write(byte[] bytesArray) throws IOException { //this func
+        if(bytesArray == null)
+        {
+            throw new IOException("The Bytes Array Is Empty");
+        }
+
         //super.write(bytesArray); //TODO check if we need the super?
         byte[] finalCompressedArray = Arrays.copyOfRange(bytesArray, 0, 24); //copy the 24 first byte to the new compressed array
 
@@ -56,8 +61,11 @@ public class MyCompressorOutputStream extends OutputStream { //this class exsten
     }
 
 
-    private byte[] convertByteArrayToInt(byte[] arrayToConvert ,int arrayToConvertSize ,byte[] finalCompressedArray)
-    {
+    private byte[] convertByteArrayToInt(byte[] arrayToConvert ,int arrayToConvertSize ,byte[] finalCompressedArray) throws IOException {
+        if (arrayToConvert == null || arrayToConvertSize == 0 || finalCompressedArray == null)
+        {
+            throw new IOException("Incorrect Arguments") ;
+        }
         String arrConvertedAsString  = Arrays.toString(arrayToConvert); //make the 32 bits array to string
         String cleanArrConvertedAsString = arrConvertedAsString.replaceAll("[^0-9.]", ""); //replace all the not number to empty string
 
