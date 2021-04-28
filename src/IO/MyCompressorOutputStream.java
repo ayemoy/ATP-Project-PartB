@@ -17,11 +17,11 @@ public class MyCompressorOutputStream extends OutputStream { //this class exsten
     @Override
     public void write(int b) throws IOException {
         out.write(b);
-
     }
 
+
     @Override
-    public void write(byte[] bytesArray) throws IOException { //this func
+    public void write(byte[] bytesArray) throws IOException { //this func get byte array and compress it
         if(bytesArray == null)
         {
             throw new IOException("The Bytes Array Is Empty");
@@ -35,7 +35,8 @@ public class MyCompressorOutputStream extends OutputStream { //this class exsten
 
         while (sizeOfBytesArray > 0) //while the original bytesArray not empty
         {
-            if (sizeOfBytesArray >= 32) {
+            if (sizeOfBytesArray >= 32)
+            {
                 byte[] arrayToConvert = Arrays.copyOfRange(bytesArray, indexInBytesArray, indexInBytesArray + 32); //copy only 32 bytes from original array
                 finalCompressedArray =convertByteArrayToInt(arrayToConvert ,arrayToConvert.length ,finalCompressedArray); //send to this function for int conversion
                 sizeOfBytesArray -= 32;
@@ -45,19 +46,17 @@ public class MyCompressorOutputStream extends OutputStream { //this class exsten
             else
             {
                 int newSizeOfBytesArray = sizeOfBytesArray%32; //minimize the original size array
-                byte[] arrayToConvert = Arrays.copyOfRange(bytesArray, indexInBytesArray,indexInBytesArray+newSizeOfBytesArray); //copy the rest of bytes from original array
-                finalCompressedArray =convertByteArrayToInt(arrayToConvert ,arrayToConvert.length ,finalCompressedArray); //send to this function for int conversion
+                byte[] arrayToConvert = Arrays.copyOfRange(bytesArray, indexInBytesArray,(indexInBytesArray+newSizeOfBytesArray)); //copy the rest of bytes from original array
+                finalCompressedArray =convertByteArrayToInt(arrayToConvert ,newSizeOfBytesArray ,finalCompressedArray); //send to this function for int conversion
                 sizeOfBytesArray-=newSizeOfBytesArray;
             }
-
-            if (out instanceof ObjectOutputStream)
-                ((ObjectOutputStream) out).writeObject(finalCompressedArray);
-            else
-                out.write(finalCompressedArray);
-            out.flush();
-            out.close();
-
         }
+        if (out instanceof ObjectOutputStream)
+            ((ObjectOutputStream) out).writeObject(finalCompressedArray);
+        else
+            out.write(finalCompressedArray);
+        out.flush();
+        out.close();
     }
 
 
@@ -85,11 +84,13 @@ public class MyCompressorOutputStream extends OutputStream { //this class exsten
 
         //concatenates the 4 bytes to the compressed byte array
         byte[] finalArray = new byte[finalCompressedArray.length + 4];
+
+        //System.arraycopy(finalCompressedArray, 0, finalArray, 0, finalCompressedArray.length);
         System.arraycopy(finalCompressedArray, 0, finalArray, 0, finalCompressedArray.length);
+
         System.arraycopy(bytes4.array(), 0, finalArray, finalCompressedArray.length, 4);
         return finalArray;
     }
-
 
 }
 
