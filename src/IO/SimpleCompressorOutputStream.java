@@ -2,6 +2,7 @@ package IO;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -40,6 +41,8 @@ public class SimpleCompressorOutputStream extends OutputStream {
 
         if((int)bytesArray[indexArray] != 0){finalCompressedArray.add(0);}//if the array  start with 1 we write 0 instances of 0
 
+        boolean check = false;
+
         while (sizeOfBytesArray > 0) //while the original bytesArray not empty
         {
             counter++; //count the first element in the array (no matter  if 0 or 1)
@@ -56,14 +59,17 @@ public class SimpleCompressorOutputStream extends OutputStream {
                     }
                     indexArray++; //move on in array
                     sizeOfBytesArray--; //minimize size array
+
                     if(indexArray == lastIndexArr)
                     {
-                        counter++;
+                        //counter++; //todo remove
                         finalCompressedArray.add(counter);
                         sizeOfBytesArray--;
+                        check=true;
                         break;
                     }
                 }
+                if(check ==true){break;}
                 finalCompressedArray.add(counter);
                 counter=0;
                 indexArray++; //move on in array
@@ -82,4 +88,20 @@ public class SimpleCompressorOutputStream extends OutputStream {
             out.write(finalCompressedArray.get(i));
         }
     }
+
+
+
+/*
+    private void convertIntToBytes(byte[] mazeBytesArray,int numToConvert, int indexToCopy)
+    {
+        byte[] numInBytes =  ByteBuffer.allocate(4).putInt(numToConvert).array();// hold bytes array like array=[2354]
+        System.arraycopy(numInBytes, 0, mazeBytesArray, indexToCopy,4);
+
+      /* copy numInBytes from the beginning(ondex 0) to the mazeBytesArray  start in indexToCopy, all the 4 bytes
+        public static void arraycopy(Object src, int srcPos, Object dest, int destPos, int length)
+        src − This is the source array.
+    srcPos − This is the starting position in the source array. dest − This is the destination array.
+    destPos − This is the starting position in the destination data. length − This is the number of array elements to be copied.
+
+    }*/
 }

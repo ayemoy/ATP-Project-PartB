@@ -38,15 +38,30 @@ public class SimpleDecompressorInputStream extends InputStream {
         int indexFinalArr = 24; //start index of finalMazeAsByteArr
 
         //int ifZero=0; //if we decompressed zero we write 0
-        int ifOneOrZero=1; //if we decompressed one we write 1
+        int ifOneOrZero=1; //if we decompressed one we write 1 if we decompressed zero we write 0
         int SizeOfCompressedArr = compressedArr.length;
 
-        if(compressedArr[0] == 0){ indexCompArr++;}
+        if(compressedArr[0] == 0)
+        {
+            indexCompArr++;
+            SizeOfCompressedArr--;
+        }
 
         while (SizeOfCompressedArr>0)
         {
-            if(compressedArr[indexCompArr] == 255)
+            if(compressedArr[indexCompArr] == 255 && compressedArr[indexCompArr+1] ==0) //if we have 255 times "one" or "zero" so we check if there is 0 after
             {
+                int temp = compressedArr[indexCompArr] + compressedArr[indexCompArr+2]; //save the total appearance nagid 255+45=300
+                for(int i=indexFinalArr ; i<indexFinalArr+temp ; i++) // we put x time each element
+                {
+                    finalMazeAsByteArr[i] = (byte) ifOneOrZero; //write the number of appearance of each->comp=[3] ->final=[1,1,1]
+                }
+                if(ifOneOrZero == 1){ifOneOrZero=0;} //turn from 1 to 0
+                else{ifOneOrZero=1;} //turn 0 to 1
+
+                indexFinalArr+=temp; //after we put x number we move on in x index in the final array
+                indexCompArr+=3; //go 1 index in compressed arr
+                SizeOfCompressedArr-=2; //minimize compressed array
 
             }
             else //if we dont see 255 in the compressed array
@@ -61,9 +76,7 @@ public class SimpleDecompressorInputStream extends InputStream {
                 indexFinalArr+=compressedArr[indexCompArr]; //after we put x number we move on in x index in the final array
                 indexCompArr++; //go 1 index in compressed arr
                 SizeOfCompressedArr--; //minimize compressed array
-
             }
-
         }
         return 0;
     }
