@@ -15,7 +15,7 @@ public class MyDecompressorInputStream extends InputStream{
 
     public MyDecompressorInputStream(InputStream inputStream) { //constructor
         this.in = inputStream;
-    }
+    } //constructor
 
 
     @Override

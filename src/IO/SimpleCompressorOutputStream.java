@@ -28,6 +28,10 @@ public class SimpleCompressorOutputStream extends OutputStream {
             finalCompressedArray.add(temp);
         }
 
+        finalCompressedArray.add(0); //add to index 24 zero' so later we can save the compressed array size in it
+
+
+
         int counter = 0; //save the number of  0 or 1 instance - how many times 0 appear
 
         int sizeOfBytesArray = bytesArray.length - 24; //save the size of the bytesArray without the 24 first bytes
@@ -70,6 +74,9 @@ public class SimpleCompressorOutputStream extends OutputStream {
                 sizeOfBytesArray--;
             }
         }
+
+        finalCompressedArray.set(24,finalCompressedArray.size()-25) ; //save in index 24 the compressed array size
+
         for(int i=0; i<finalCompressedArray.size() ; i++) //write all the compressed array
         {
             out.write(finalCompressedArray.get(i));
