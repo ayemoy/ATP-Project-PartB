@@ -39,7 +39,7 @@ public class Maze { //all the parameters thay may be in the constructor. variabl
     public Maze(byte[] bytesMaze) //get bytes array ans turn it to Maze int matrix
     {
         byte[] currentByte = new byte [4]; //hold 4 bytes everytime from the byte maze array and then we convert back to int
-        int[] totalDetails = new  int[6]; //hold the aii details that we need to create int maze (like start/goal position' size of maze..)
+        int[] totalDetails = new  int[6]; //hold the all details that we need to create int maze (like start/goal position' size of maze..)
         int indexCurrentByte = 0; //tell us if we took 4 bytes
         int indexTotalDetails = 0; //tell us where to put the int in the totalDetails
 
