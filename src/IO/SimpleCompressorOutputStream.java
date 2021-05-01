@@ -25,7 +25,7 @@ public class SimpleCompressorOutputStream extends OutputStream {
 
         for(int i=0 ; i<24 ; i++) //write the 24 first byte to file
         {
-            int temp = (int) bytesArray[i];
+            int temp = bytesArray[i];
             finalCompressedArray.add(temp);
         }
 

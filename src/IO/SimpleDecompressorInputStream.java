@@ -2,6 +2,7 @@ package IO;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
 
 public class SimpleDecompressorInputStream extends InputStream {
 
@@ -22,7 +23,15 @@ public class SimpleDecompressorInputStream extends InputStream {
         byte[] arrayOfFirst25 = new byte[25]; //this is the tempArray of maze. we copy it later to finalMazeAsByteArr
 
         in.read(arrayOfFirst25); //put the compressed array in temp array
-        int sizeOfTempArray =arrayOfFirst25[24];
+        byte[] arrLen = new byte[4];
+        for (int i=0; i<arrLen.length; i++){
+            arrLen[i] = 0;
+            if (i==3){
+                arrLen[i] = arrayOfFirst25[24];
+            }
+        }
+        int sizeOfTempArray = convertByteToInt(arrLen);
+//        int sizeOfTempArray =arrayOfFirst25[24];
 
         byte[] compressedArr = new byte[sizeOfTempArray]; //save only the compressed number' without the 24 first details
         in.read(compressedArr); //put the compressed array in temp array
@@ -38,17 +47,21 @@ public class SimpleDecompressorInputStream extends InputStream {
         int indexFinalArr = 24; //start index of finalMazeAsByteArr
 
         //int ifZero=0; //if we decompressed zero we write 0
-        int ifOneOrZero=1; //if we decompressed one we write 1 if we decompressed zero we write 0
+        int ifOneOrZero=0; //if we decompressed one we write 1 if we decompressed zero we write 0
         int SizeOfCompressedArr = compressedArr.length;
 
         if(compressedArr[0] == 0)
         {
             indexCompArr++;
             SizeOfCompressedArr--;
+            ifOneOrZero=1;
         }
 
         while (SizeOfCompressedArr>0)
         {
+            if (indexCompArr == 100){
+                int x=5;
+            }
             if(compressedArr[indexCompArr] == 255 && compressedArr[indexCompArr+1] ==0) //if we have 255 times "one" or "zero" so we check if there is 0 after
             {
                 int temp = compressedArr[indexCompArr] + compressedArr[indexCompArr+2]; //save the total appearance nagid 255+45=300
@@ -79,5 +92,12 @@ public class SimpleDecompressorInputStream extends InputStream {
             }
         }
         return 0;
+    }
+
+
+    private int convertByteToInt(byte[] numToConvert) //convert byte to int
+    {
+        ByteBuffer byteBuffer = ByteBuffer.wrap(numToConvert);
+        return byteBuffer.getInt();
     }
 }
