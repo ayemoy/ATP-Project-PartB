@@ -29,7 +29,10 @@ public class SimpleCompressorOutputStream extends OutputStream {
             finalCompressedArray.add(temp);
         }
 
+
         finalCompressedArray.add(0); //add to index 24 zero' so later we can save the compressed array size in it
+
+
 
 
 
@@ -92,16 +95,16 @@ public class SimpleCompressorOutputStream extends OutputStream {
 
 
 /*
-    private void convertIntToBytes(byte[] mazeBytesArray,int numToConvert, int indexToCopy)
+    private void convertIntToBytes(byte[] bytesArray,int numToConvert, int indexToCopy)
     {
         byte[] numInBytes =  ByteBuffer.allocate(4).putInt(numToConvert).array();// hold bytes array like array=[2354]
-        System.arraycopy(numInBytes, 0, mazeBytesArray, indexToCopy,4);
+        System.arraycopy(numInBytes, 0, bytesArray, indexToCopy,4);
 
       /* copy numInBytes from the beginning(ondex 0) to the mazeBytesArray  start in indexToCopy, all the 4 bytes
         public static void arraycopy(Object src, int srcPos, Object dest, int destPos, int length)
         src − This is the source array.
     srcPos − This is the starting position in the source array. dest − This is the destination array.
-    destPos − This is the starting position in the destination data. length − This is the number of array elements to be copied.
+    destPos − This is the starting position in the destination data. length − This is the number of array elements to be copied.*/
 
-    }*/
+   // }
 }
