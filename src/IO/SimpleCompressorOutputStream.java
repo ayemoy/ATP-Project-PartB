@@ -6,6 +6,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+
 public class SimpleCompressorOutputStream extends OutputStream {
     private OutputStream out;
 
@@ -17,23 +18,21 @@ public class SimpleCompressorOutputStream extends OutputStream {
     }
 
     @Override
-    public void write(byte[] bytesArray) throws IOException {
+    public void write(byte[] bytesArray) throws IOException { //we get one big bytes array that hold the maze in one line, and we need to compress it
        // super.write(b); todo need?
         if(bytesArray == null) {throw new IOException("The Bytes Array Is Empty");}
 
-        ArrayList<Integer> finalCompressedArray = new ArrayList<>();
+        ArrayList<Integer> finalCompressedArray = new ArrayList<>(); //open array that hold the final compressed maze. later we will copy it to bytesArray
+        //it will look like finalCompressedArray=[24 first details | 9,6,33,104,255,0,55,123,1,1,1,3,2,1]
 
-        for(int i=0 ; i<24 ; i++) //write the 24 first byte to file
+        for(int i=0 ; i<24 ; i++) //we copy the 24 first byte to the final compressed array
         {
             int temp = bytesArray[i];
             finalCompressedArray.add(temp);
         }
 
 
-        finalCompressedArray.add(0); //add to index 24 zero' so later we can save the compressed array size in it
-
-
-
+        //finalCompressedArray.add(0); //add to index 24 zero' so later we can save the compressed array size in it
 
 
         int counter = 0; //save the number of  0 or 1 instance - how many times 0 appear
@@ -84,7 +83,7 @@ public class SimpleCompressorOutputStream extends OutputStream {
             }
         }
 
-        finalCompressedArray.set(24,finalCompressedArray.size()-25) ; //save in index 24 the compressed array size
+       // finalCompressedArray.set(24,finalCompressedArray.size()-25) ; //save in index 24 the compressed array size
 
         for(int i=0; i<finalCompressedArray.size() ; i++) //write all the compressed array
         {
@@ -93,6 +92,10 @@ public class SimpleCompressorOutputStream extends OutputStream {
     }
 
 
+    private byte[] convertIntToBytes(int numToConvert) {
+        byte[] numInBytes = ByteBuffer.allocate(4).putInt(numToConvert).array();// hold bytes array like array=[2354]
+        return numInBytes;
+    }
 
 /*
     private void convertIntToBytes(byte[] bytesArray,int numToConvert, int indexToCopy)
