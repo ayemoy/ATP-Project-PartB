@@ -26,7 +26,7 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy{
         //tempDirPath = System.getProperty("java.io.tmpdir");
         this.solveOfMazeMap = new ConcurrentHashMap<>();
         this.clientCounter = new AtomicInteger(0);
-        this. algorithmSearcher = new BreadthFirstSearch();
+        this.algorithmSearcher = new BreadthFirstSearch();
         this.tempDirectoryPath =System.getProperty("java.io.tmpdir"); //The server saves the solution to the mazes it receives on disk, each solution is saved in a separate file(3a)
 
     }
@@ -43,7 +43,7 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy{
             byte[] mazeFromClientAsBytes = mazeFromClient.toByteArray(); //turn the maze to byte array so we can use it
 
             String newMazeKeyStr = Arrays.toString(mazeFromClientAsBytes); //return the bytes maze to string so we can use it for the key in solveOfMazeMap
-            Solution solutionMaze; //save the solution that we need to return for client (Solutin object)
+            Solution solutionMaze; //save the solution that we need to return for client (Solution object)
             String solutionFileName; //save the solution
 
             //check if the maze maze already solved
@@ -66,7 +66,8 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy{
                 //now we send to help function that will updates solveOfMazeMap and save the new maze and its solution so we can return it to the client
                 writeAllDetailsToClient(solutionFileName,solutionMaze,mazeFileName,mazeFromClient,newMazeKeyStr);
             }
-
+            toClient.writeObject(solutionMaze);
+            toClient.flush();
         }
 
         catch (IOException | ClassNotFoundException e)
@@ -99,10 +100,10 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy{
 
 
     //this help function get a new maze that we haven't his solution in map, and creates all his detaild ans write it to the client
-    private void writeAllDetailsToClient(String solutionFileName, Solution solutionMaze, String mazeFileName, Maze outMazeClient, String newMazeKeyStr)
+    private synchronized void writeAllDetailsToClient(String solutionFileName, Solution solutionMaze, String mazeFileName, Maze outMazeClient, String newMazeKeyStr)
     {
+        writeSolutionToFileValue(solutionFileName, solutionMaze); //we write the solution of the maze that client give us as string file and set it as a value in solveOfMaze
         writeMazeToFileKey(mazeFileName, outMazeClient); //we write the maze that client give us as string file and set it as a key in solveOfMazeMap
-        writeSolutionToFileValue(solutionFileName, solutionMaze); //we write the solution of the maze that client give us as string file and set it as a value in solveOfMazeM
         solveOfMazeMap.put(newMazeKeyStr, solutionFileName); //update solveOfMazeMap
     }
 

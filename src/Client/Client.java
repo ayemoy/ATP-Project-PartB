@@ -12,7 +12,7 @@ public class Client implements IClientStrategy{
     private int serverPort; //save the server port that client connect with
     private IClientStrategy clientStrategy;
 
-    public Client(InetAddress serverIP, int serverPort, IClientStrategy clientStrategy) //consructor
+    public Client(InetAddress serverIP, int serverPort, IClientStrategy clientStrategy) //constructor
     {
         this.serverIP = serverIP;
         this.serverPort = serverPort;
@@ -25,11 +25,14 @@ public class Client implements IClientStrategy{
     }
 
     public void communicateWithServer() {
-        try {
+        try
+        {
             Socket socket = new Socket(serverIP, serverPort);
             clientStrategy.clientStrategy(socket.getInputStream(),socket.getOutputStream());
             socket.close();
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             e.printStackTrace();
         }
     }

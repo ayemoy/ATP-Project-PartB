@@ -9,7 +9,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.nio.ByteBuffer;
 
-public class Maze { //all the parameters thay may be in the constructor. variable of class
+public class Maze implements Serializable { //all the parameters thay may be in the constructor. variable of class
 
     private int numOfRow; //hold the number(size) of rows we want build the maze
     private int numOfCol; //hold the number(size) of cols we want build the maze
