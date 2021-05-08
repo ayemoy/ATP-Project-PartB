@@ -19,12 +19,11 @@ public abstract class AState {
 
 // -_-_-_-_-_-_-_-_-_-_--_-__ getters a n d setters -_-_--_-_-____--__--__
 
-    public double getCost() { return cost; }
+    public double getCost() {return cost;}
     public String getStateName() { return stateName; }
     public AState getPapa() { return papa; }
-    public ArrayList<AState> getStateNeighborsList() {return stateNeighborsList; }
+    public ArrayList<AState> getStateNeighborsList() { return stateNeighborsList; }
     public boolean isVisited() { return isVisited; }
-
     public void setCost(double cost) { this.cost = cost; }
     public void setStateName(String stateName) { this.stateName = stateName; }
     public void setPapa(AState papa) { this.papa = papa; }
@@ -46,4 +45,6 @@ public abstract class AState {
     public int hashCode() {
         return Objects.hash(stateName);
     }
+
+    public void setNeighboursToNull() { stateNeighborsList = null;}
 }

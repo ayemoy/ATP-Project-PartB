@@ -14,7 +14,7 @@ public class ServerStrategyGenerateMaze implements IServerStrategy{
 
     @Override //this func get int arr=[sizeOfRowMaze,sizeFoColMaze] and create the maze. then we compressed the maze
     //with myCompressor and send it back to the client as compressed maze
-    public void applyStrategy(InputStream inputFromClient, OutputStream outputToClient) {
+    public void ServerStrategy(InputStream inputFromClient, OutputStream outputToClient) {
 
         try
         {

@@ -1,12 +1,13 @@
 package algorithms.search;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 /**
  * this class extend ASearchingAlgorithm class
  * this class will search the goal state by DFS algorithm
  */
 
-public class Solution {
+public class Solution implements Serializable {
 
     private ArrayList<AState> solutionPath; //this list save the states of the solution path
 
@@ -22,14 +23,12 @@ public class Solution {
     public ArrayList<AState> getSolutionPath() {
         return solutionPath;
     }
-   // public void setSolutionPath(ArrayList<AState> solutionPath) {
-        //this.solutionPath = solutionPath;
-    //}
 
-
-    //public void addStateToPathSolution(AState stateOfPath) //this function save the path of the solution
-    //{
-      //  if(stateOfPath != null){ solutionPath.add(stateOfPath);} //add a state to the solution path
-   // }
+    public void setNeighboursPathToNull()
+    {
+        for (AState state:solutionPath) {
+            state.setNeighboursToNull();
+        }
+    }
 }
 

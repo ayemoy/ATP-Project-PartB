@@ -9,6 +9,6 @@ import java.io.OutputStream;
 
 public interface IServerStrategy {
 
-    public void applyStrategy(InputStream inputFromClient, OutputStream outpuToClient);
+    public void ServerStrategy(InputStream inputFromClient, OutputStream outputToClient);
 
 }
