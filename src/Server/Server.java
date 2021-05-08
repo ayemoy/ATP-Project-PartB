@@ -35,7 +35,8 @@ public class Server {
     }
 
 
-    public void run(){
+    public void run() //when we do start(), this is what run in thr CPU
+    {
         try
         { //init new socket that we listen to everytime we do accept to client
             ServerSocket serverSocket = new ServerSocket(port); //generic sever that get port address
