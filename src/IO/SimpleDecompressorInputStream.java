@@ -169,7 +169,7 @@ public class SimpleDecompressorInputStream extends InputStream {
         }
 
         while (indexCompArr < compressedArr.length){
-            if(compressedArr[indexCompArr] == 255 && compressedArr[indexCompArr+1] ==0) { //if we have 255 times "one" or "zero" so we check if there is 0 after
+            /*if(compressedArr[indexCompArr] == 255 && compressedArr[indexCompArr+1] ==0) { //if we have 255 times "one" or "zero" so we check if there is 0 after
                 int temp = compressedArr[indexCompArr] + compressedArr[indexCompArr+2]; //save the total appearance nagid 255+45=300
                 for(int i=indexFinalArr ; i<indexFinalArr+temp ; i++) // we put x time each element
                 {
@@ -180,23 +180,24 @@ public class SimpleDecompressorInputStream extends InputStream {
 
                 indexFinalArr+=temp; //after we put x number we move on in x index in the final array
                 indexCompArr+=3; //go 3 index in compressed arr
-            }
-            else{
-                int temp = compressedArr[indexCompArr];
-                if (compressedArr[indexCompArr] < 0){
-                    temp = 256 + compressedArr[indexCompArr];
-                }
+            }*/
 
-                for(int i=indexFinalArr ; (i<indexFinalArr+temp && i<finalMazeAsByteArr.length) ; i++) // we put x time each element
-                {
-                    finalMazeAsByteArr[i] = (byte) ifOneOrZero; //write the number of appearance of each->comp=[3] ->final=[1,1,1]
-                }
-                if(ifOneOrZero == 1){ifOneOrZero=0;} //turn from 1 to 0
-                else{ifOneOrZero=1;} //turn 0 to 1
-
-                indexFinalArr+=temp; //after we put x number we move on in x index in the final array
-                indexCompArr++; //go 1 index in compressed arr
+            int temp = compressedArr[indexCompArr];
+            if (compressedArr[indexCompArr] < 0)
+            {
+                temp = 256 + compressedArr[indexCompArr];
             }
+
+            for(int i=indexFinalArr ; (i<indexFinalArr+temp && i<finalMazeAsByteArr.length) ; i++) // we put x time each element
+            {
+                finalMazeAsByteArr[i] = (byte) ifOneOrZero; //write the number of appearance of each->comp=[3] ->final=[1,1,1]
+            }
+            if(ifOneOrZero == 1){ifOneOrZero=0;} //turn from 1 to 0
+            else{ifOneOrZero=1;} //turn 0 to 1
+
+            indexFinalArr+=temp; //after we put x number we move on in x index in the final array
+            indexCompArr++; //go 1 index in compressed arr
+
         }
         return 0;
     }
