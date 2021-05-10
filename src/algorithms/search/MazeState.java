@@ -12,9 +12,9 @@ public class MazeState extends AState implements Serializable {
         this.StatePosition = statePosition;
     }
 
-    public MazeState (String name){
-        super(name);
-    }
+   // public MazeState (String name){
+     //   super(name);
+   // }
 
     @Override
     public String toString(){return StatePosition.toString();}

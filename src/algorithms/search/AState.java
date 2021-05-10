@@ -1,8 +1,9 @@
 package algorithms.search;
 
+import java.io.Serializable;
 import java.util.*;
 
-public abstract class AState {
+public abstract class AState  implements Serializable {
     private double cost; //the cost of arrival to a specific state
     private String stateName;
     private AState papa;
