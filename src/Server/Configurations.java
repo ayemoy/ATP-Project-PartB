@@ -7,12 +7,25 @@ import java.io.*;
 public class Configurations {
 
     public static String getProperty (String str) {
-        try (InputStream input = Configurations.class.getClassLoader().getResourceAsStream("config.properties"))
+        
+        /*string file_name = "config.properties";
+        try (InputStream input = Configurations.class.getClassLoader().getResourceAsStream(file_name))// במקום מה שלמטה 
         {
+            Properties newProper= new Properties();
+            if (input != null) { newProper.load(input);}// if null it means that resource could not be found
+            else {return null;}
 
+            return newProper.getProperty(str);
+        }
+        catch (IOException ex){ ex.printStackTrace();}
+        return null;
+        */
+        try (InputStream input = Configurations.class.getClassLoader().getResourceAsStream("config.properties"))//trying to get the properties from config file, 
+        {
+            
             Properties newProper = new Properties();
 
-            if (input == null) {return null;}
+            if (input == null) {return null;}// if null it means that resource could not be found
 
             //load a properties file from class path, inside static method
             newProper.load(input);
